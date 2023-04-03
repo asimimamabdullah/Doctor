@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View, TextInput, Image } from "react-native";
+import {
+	Button,
+	StyleSheet,
+	Text,
+	View,
+	TextInput,
+	Image,
+	TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -9,13 +17,8 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	return (
 		<View style={{ flex: 1, backgroundColor: "#afe4ec" }}>
-			{/* <LinearGradient
-				// Background Linear Gradient
-				colors={["rgba(0,0,0,0.8)", "transparent"]}
-				style={styles.background}
-			/> */}
 			<LinearGradient
-				// Button Linear Gradient
+				// Background Linear Gradient
 				colors={["#B9E8DE", "#ffffff", "#BEE2B1"]}
 				start={{ x: -0.8, y: 0.01 }}
 				end={{ x: 0.7, y: 1.5 }}
@@ -27,14 +30,13 @@ const Login = () => {
 							flexDirection: "row",
 							justifyContent: "center",
 							alignItems: "center",
-							backgroundColor: "blue",
+							// backgroundColor: "blue",
 						}}>
 						<View
 							style={{
 								flex: 1,
-								backgroundColor: "green",
+								// backgroundColor: "green",
 								justifyContent: "space-around",
-								// paddingHorizontal: 10,
 							}}>
 							<Text
 								style={{
@@ -118,19 +120,45 @@ const Login = () => {
 
 							<View
 								style={{
-									// width: "100%"
 									marginHorizontal: 20,
 									borderRadius: 12,
-									backgroundColor: "dodgerblue",
+									backgroundColor: "green",
 									paddingVertical: 15,
 									paddingHorizontal: 10,
 									justifyContent: "center",
 								}}>
-								<Text style={{ textAlign: "center", fontSize: 20 }}>
+								<Text
+									style={{
+										textAlign: "center",
+										fontSize: 20,
+										color: "#fff",
+									}}>
 									Login
 								</Text>
 							</View>
+
+							{/* Forgot password button Link */}
+							<View style={{ marginTop: 30, justifyContent: "center" }}>
+								<Text
+									style={{
+										textAlign: "center",
+										fontSize: 15,
+										color: "green",
+									}}>
+									Forgot Password
+								</Text>
+							</View>
 						</View>
+					</View>
+
+					<View
+						style={{
+							bottom: 40,
+							justifyContent: "center",
+						}}>
+						<Text style={{ textAlign: "center", color: "green" }}>
+							Don't have an account? Join Us
+						</Text>
 					</View>
 
 					{/* <Text style={styles.text}>Sign in with Facebook</Text> */}
