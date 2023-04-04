@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-	Button,
-	StyleSheet,
-	Text,
-	View,
-	TextInput,
-	Image,
-	TouchableOpacity,
-} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import React, { useState } from "react";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
-const Login = () => {
+const Register = () => {
 	const [email, setEmail] = useState("");
+	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
 	return (
 		<View style={{ flex: 1, backgroundColor: "#afe4ec" }}>
@@ -22,7 +15,7 @@ const Login = () => {
 				colors={["#B9E8DE", "#ffffff", "#BEE2B1"]}
 				start={{ x: -0.8, y: 0.01 }}
 				end={{ x: 0.7, y: 1.5 }}
-				style={styles.button}>
+				style={{ flex: 1 }}>
 				<SafeAreaView style={{ flex: 1 }}>
 					<View
 						style={{
@@ -36,15 +29,16 @@ const Login = () => {
 							style={{
 								flex: 1,
 								// backgroundColor: "green",
+								top: 50,
 								justifyContent: "space-around",
 							}}>
 							<Text
 								style={{
-									fontSize: 24,
+									fontSize: 26,
 									textAlign: "center",
-									marginBottom: 25,
+									// marginBottom: 25,
 								}}>
-								Welcome back
+								Welcome to find a Doctor
 							</Text>
 							{/* Buttons  row */}
 							<View
@@ -52,25 +46,29 @@ const Login = () => {
 									flexDirection: "row",
 									justifyContent: "space-between",
 									paddingHorizontal: 20,
+									marginTop: 60,
+									marginBottom: 20,
 								}}>
 								{/* Button */}
 								<View
 									style={{
 										paddingVertical: 15,
-										backgroundColor: "dodgerblue",
+										backgroundColor: "#fff",
 										flex: 0.48,
-										borderRadius: 8,
+										borderRadius: 12,
 									}}>
 									<Image />
-									<Text style={{ textAlign: "center" }}>Google</Text>
+									<Text style={{ textAlign: "center", fontSize: 16 }}>
+										Google
+									</Text>
 								</View>
 								{/* Button */}
 								<View
 									style={{
 										paddingVertical: 15,
-										backgroundColor: "dodgerblue",
+										backgroundColor: "#fff",
 										flex: 0.48,
-										borderRadius: 8,
+										borderRadius: 12,
 									}}>
 									<Image />
 									<Text style={{ textAlign: "center" }}>Facebook</Text>
@@ -78,44 +76,77 @@ const Login = () => {
 							</View>
 							{/* Input fields */}
 							<View
-								style={{ paddingVertical: 15, paddingHorizontal: 20 }}>
+								style={{
+									paddingTop: 15,
+									paddingHorizontal: 20,
+									// backgroundColor: "purple",
+								}}>
+								{/* Name */}
 								<View>
 									<TextInput
-										value={email}
-										onChangeText={(t) => setEmail(t)}
-										placeholder="Email"
+										value={name}
+										onChangeText={(t) => setName(t)}
+										placeholder="Name"
 										style={{
-											borderColor: "#aaa",
+											borderColor: "#ccc",
 											borderWidth: 1,
-											marginVertical: 5,
+											marginVertical: 8,
 											fontSize: 16,
-											paddingVertical: 8,
+											paddingVertical: 12,
 											paddingHorizontal: 10,
-											borderRadius: 8,
+											borderRadius: 12,
 											color: "#777",
 										}}
 
 										//Image here of if email is valid or not
 									/>
 								</View>
+								{/* Email */}
+								<View>
+									<TextInput
+										value={email}
+										onChangeText={(t) => setEmail(t)}
+										placeholder="Email"
+										style={{
+											borderColor: "#ccc",
+											borderWidth: 1,
+											marginVertical: 8,
+											fontSize: 16,
+											paddingVertical: 12,
+											paddingHorizontal: 10,
+											borderRadius: 12,
+											color: "#777",
+										}}
 
+										//Image here of if email is valid or not
+									/>
+								</View>
+								{/* Password Field */}
 								<View>
 									<TextInput
 										value={password}
 										onChangeText={(t) => setPassword(t)}
 										placeholder="Password"
 										style={{
-											borderColor: "#aaa",
+											borderColor: "#ccc",
 											borderWidth: 1,
-											marginVertical: 5,
+											marginVertical: 8,
 											fontSize: 16,
-											paddingVertical: 8,
+											paddingVertical: 12,
 											paddingHorizontal: 10,
-											borderRadius: 8,
+											borderRadius: 12,
 											color: "#777",
 										}}
 									/>
 								</View>
+							</View>
+
+							{/* Terms and conditions */}
+							<View style={{ paddingHorizontal: 20 }}>
+								<Image style={{ width: 20, height: 20 }} />
+								<Text style={{}}>
+									I agree with the terms of Services & Privacy Policy
+								</Text>
 							</View>
 
 							<View
@@ -125,6 +156,7 @@ const Login = () => {
 									backgroundColor: "green",
 									paddingVertical: 15,
 									paddingHorizontal: 10,
+									marginTop: 35,
 									justifyContent: "center",
 								}}>
 								<Text
@@ -133,7 +165,7 @@ const Login = () => {
 										fontSize: 20,
 										color: "#fff",
 									}}>
-									Login
+									Sign Up
 								</Text>
 							</View>
 
@@ -144,9 +176,7 @@ const Login = () => {
 										textAlign: "center",
 										fontSize: 15,
 										color: "green",
-									}}>
-									Forgot Password
-								</Text>
+									}}></Text>
 							</View>
 						</View>
 					</View>
@@ -157,7 +187,7 @@ const Login = () => {
 							justifyContent: "center",
 						}}>
 						<Text style={{ textAlign: "center", color: "green" }}>
-							Don't have an account? Join Us
+							Have an account? Log in
 						</Text>
 					</View>
 
@@ -169,14 +199,6 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Register;
 
-const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		backgroundColor: "green",
-	},
-	button: {
-		flex: 1,
-	},
-});
+const styles = StyleSheet.create({});
