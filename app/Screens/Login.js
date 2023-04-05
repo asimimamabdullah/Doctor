@@ -30,12 +30,10 @@ const Login = () => {
 							flexDirection: "row",
 							justifyContent: "center",
 							alignItems: "center",
-							// backgroundColor: "blue",
 						}}>
 						<View
 							style={{
 								flex: 1,
-								// backgroundColor: "green",
 								justifyContent: "space-around",
 							}}>
 							<Text
@@ -54,27 +52,29 @@ const Login = () => {
 									paddingHorizontal: 20,
 								}}>
 								{/* Button */}
-								<View
+								<TouchableOpacity
 									style={{
 										paddingVertical: 15,
-										backgroundColor: "dodgerblue",
+										backgroundColor: "#fff",
+										elevation: 2,
 										flex: 0.48,
 										borderRadius: 8,
 									}}>
 									<Image />
 									<Text style={{ textAlign: "center" }}>Google</Text>
-								</View>
+								</TouchableOpacity>
 								{/* Button */}
-								<View
+								<TouchableOpacity
 									style={{
 										paddingVertical: 15,
-										backgroundColor: "dodgerblue",
+										backgroundColor: "#fff",
+										elevation: 2,
 										flex: 0.48,
 										borderRadius: 8,
 									}}>
 									<Image />
 									<Text style={{ textAlign: "center" }}>Facebook</Text>
-								</View>
+								</TouchableOpacity>
 							</View>
 							{/* Input fields */}
 							<View
@@ -85,11 +85,11 @@ const Login = () => {
 										onChangeText={(t) => setEmail(t)}
 										placeholder="Email"
 										style={{
-											borderColor: "#aaa",
+											borderColor: "#dddddd",
 											borderWidth: 1,
-											marginVertical: 5,
+											marginVertical: 8,
 											fontSize: 16,
-											paddingVertical: 8,
+											paddingVertical: 10,
 											paddingHorizontal: 10,
 											borderRadius: 8,
 											color: "#777",
@@ -99,17 +99,17 @@ const Login = () => {
 									/>
 								</View>
 
-								<View>
+								<View style={{ elevation: 10 }}>
 									<TextInput
 										value={password}
 										onChangeText={(t) => setPassword(t)}
 										placeholder="Password"
 										style={{
-											borderColor: "#aaa",
+											borderColor: "#dddddd",
 											borderWidth: 1,
-											marginVertical: 5,
+											marginVertical: 8,
 											fontSize: 16,
-											paddingVertical: 8,
+											paddingVertical: 10,
 											paddingHorizontal: 10,
 											borderRadius: 8,
 											color: "#777",
@@ -118,11 +118,11 @@ const Login = () => {
 								</View>
 							</View>
 
-							<View
+							<TouchableOpacity
 								style={{
 									marginHorizontal: 20,
 									borderRadius: 12,
-									backgroundColor: "green",
+									backgroundColor: "rgb(14,190,126)",
 									paddingVertical: 15,
 									paddingHorizontal: 10,
 									justifyContent: "center",
@@ -135,10 +135,11 @@ const Login = () => {
 									}}>
 									Login
 								</Text>
-							</View>
+							</TouchableOpacity>
 
 							{/* Forgot password button Link */}
-							<View style={{ marginTop: 30, justifyContent: "center" }}>
+							<TouchableOpacity
+								style={{ marginTop: 30, justifyContent: "center" }}>
 								<Text
 									style={{
 										textAlign: "center",
@@ -147,11 +148,11 @@ const Login = () => {
 									}}>
 									Forgot Password
 								</Text>
-							</View>
+							</TouchableOpacity>
 						</View>
 					</View>
 
-					<View
+					<TouchableOpacity
 						style={{
 							bottom: 40,
 							justifyContent: "center",
@@ -159,7 +160,7 @@ const Login = () => {
 						<Text style={{ textAlign: "center", color: "green" }}>
 							Don't have an account? Join Us
 						</Text>
-					</View>
+					</TouchableOpacity>
 
 					{/* <Text style={styles.text}>Sign in with Facebook</Text> */}
 				</SafeAreaView>

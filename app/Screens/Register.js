@@ -1,6 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+	Image,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
@@ -12,7 +19,7 @@ const Register = () => {
 		<View style={{ flex: 1, backgroundColor: "#afe4ec" }}>
 			<LinearGradient
 				// Background Linear Gradient
-				colors={["#B9E8DE", "#ffffff", "#BEE2B1"]}
+				colors={["#B9E8DE", "#ffffff", "#ffffff", "#BEE2B1"]}
 				start={{ x: -0.8, y: 0.01 }}
 				end={{ x: 0.7, y: 1.5 }}
 				style={{ flex: 1 }}>
@@ -23,12 +30,10 @@ const Register = () => {
 							flexDirection: "row",
 							justifyContent: "center",
 							alignItems: "center",
-							// backgroundColor: "blue",
 						}}>
 						<View
 							style={{
 								flex: 1,
-								// backgroundColor: "green",
 								top: 50,
 								justifyContent: "space-around",
 							}}>
@@ -50,36 +55,39 @@ const Register = () => {
 									marginBottom: 20,
 								}}>
 								{/* Button */}
-								<View
+								<TouchableOpacity
 									style={{
 										paddingVertical: 15,
 										backgroundColor: "#fff",
 										flex: 0.48,
 										borderRadius: 12,
+										elevation: 2,
 									}}>
 									<Image />
 									<Text style={{ textAlign: "center", fontSize: 16 }}>
 										Google
 									</Text>
-								</View>
+								</TouchableOpacity>
 								{/* Button */}
-								<View
+								<TouchableOpacity
 									style={{
 										paddingVertical: 15,
 										backgroundColor: "#fff",
 										flex: 0.48,
 										borderRadius: 12,
+										elevation: 2,
 									}}>
 									<Image />
-									<Text style={{ textAlign: "center" }}>Facebook</Text>
-								</View>
+									<Text style={{ textAlign: "center", fontSize: 16 }}>
+										Facebook
+									</Text>
+								</TouchableOpacity>
 							</View>
 							{/* Input fields */}
 							<View
 								style={{
 									paddingTop: 15,
 									paddingHorizontal: 20,
-									// backgroundColor: "purple",
 								}}>
 								{/* Name */}
 								<View>
@@ -88,7 +96,7 @@ const Register = () => {
 										onChangeText={(t) => setName(t)}
 										placeholder="Name"
 										style={{
-											borderColor: "#ccc",
+											borderColor: "#ddd",
 											borderWidth: 1,
 											marginVertical: 8,
 											fontSize: 16,
@@ -108,7 +116,7 @@ const Register = () => {
 										onChangeText={(t) => setEmail(t)}
 										placeholder="Email"
 										style={{
-											borderColor: "#ccc",
+											borderColor: "#ddd",
 											borderWidth: 1,
 											marginVertical: 8,
 											fontSize: 16,
@@ -128,7 +136,7 @@ const Register = () => {
 										onChangeText={(t) => setPassword(t)}
 										placeholder="Password"
 										style={{
-											borderColor: "#ccc",
+											borderColor: "#ddd",
 											borderWidth: 1,
 											marginVertical: 8,
 											fontSize: 16,
@@ -149,11 +157,11 @@ const Register = () => {
 								</Text>
 							</View>
 
-							<View
+							<TouchableOpacity
 								style={{
 									marginHorizontal: 20,
 									borderRadius: 12,
-									backgroundColor: "green",
+									backgroundColor: "rgb(14,190,126)",
 									paddingVertical: 15,
 									paddingHorizontal: 10,
 									marginTop: 35,
@@ -167,7 +175,7 @@ const Register = () => {
 									}}>
 									Sign Up
 								</Text>
-							</View>
+							</TouchableOpacity>
 
 							{/* Forgot password button Link */}
 							<View style={{ marginTop: 30, justifyContent: "center" }}>
@@ -181,7 +189,7 @@ const Register = () => {
 						</View>
 					</View>
 
-					<View
+					<TouchableOpacity
 						style={{
 							bottom: 40,
 							justifyContent: "center",
@@ -189,7 +197,7 @@ const Register = () => {
 						<Text style={{ textAlign: "center", color: "green" }}>
 							Have an account? Log in
 						</Text>
-					</View>
+					</TouchableOpacity>
 
 					{/* <Text style={styles.text}>Sign in with Facebook</Text> */}
 				</SafeAreaView>
