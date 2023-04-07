@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Login = () => {
+const Login = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	return (
@@ -156,7 +156,8 @@ const Login = () => {
 						style={{
 							bottom: 40,
 							justifyContent: "center",
-						}}>
+						}}
+						onPress={() => navigation.navigate("Register")}>
 						<Text style={{ textAlign: "center", color: "green" }}>
 							Don't have an account? Join Us
 						</Text>

@@ -1,4 +1,5 @@
 import { fillerup } from "../../assets/images";
+const date = new Date();
 
 export const doctors = [
 	{
@@ -13,6 +14,12 @@ export const doctors = [
 		rate: "29:00",
 		experience: 7,
 		image: fillerup,
+		dates: date.getDate(),
+		booked: {},
+		doctorsTiming: {
+			afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
+			evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
+		},
 	},
 	{
 		id: 1,
@@ -26,6 +33,10 @@ export const doctors = [
 		rate: "29:00",
 		experience: 7,
 		image: fillerup,
+		doctorsTiming: {
+			afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
+			evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
+		},
 	},
 	{
 		id: 2,
@@ -39,6 +50,10 @@ export const doctors = [
 		rate: "29:00",
 		experience: 7,
 		image: fillerup,
+		doctorsTiming: {
+			afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
+			evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
+		},
 	},
 	{
 		id: 3,
@@ -52,5 +67,9 @@ export const doctors = [
 		rate: "29:00",
 		experience: 7,
 		image: fillerup,
+		doctorsTiming: {
+			afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
+			evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
+		},
 	},
 ];

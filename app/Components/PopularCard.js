@@ -1,10 +1,13 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { orangeStar, whiteStar } from "../../assets/icons";
 
-const PopularCard = ({ item }) => {
+const PopularCard = ({ gotItem, navigation }) => {
+	const { item } = gotItem;
 	return (
-		<View style={styles.card}>
+		<TouchableOpacity
+			style={styles.card}
+			onPress={() => navigation.navigate("Appointment", { item })}>
 			<Image
 				source={item?.image}
 				style={{ ...styles.cardImage }}
@@ -30,7 +33,7 @@ const PopularCard = ({ item }) => {
 						))}
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 

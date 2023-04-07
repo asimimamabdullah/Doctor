@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
-const Register = () => {
+const Register = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
@@ -41,7 +41,6 @@ const Register = () => {
 								style={{
 									fontSize: 26,
 									textAlign: "center",
-									// marginBottom: 25,
 								}}>
 								Welcome to find a Doctor
 							</Text>
@@ -193,7 +192,8 @@ const Register = () => {
 						style={{
 							bottom: 40,
 							justifyContent: "center",
-						}}>
+						}}
+						onPress={() => navigation.navigate("Login")}>
 						<Text style={{ textAlign: "center", color: "green" }}>
 							Have an account? Log in
 						</Text>

@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./../Screens/Home";
 import { home, openBook, user, whiteHeart } from "../../assets/icons";
+import Login from "../Screens/Login";
 
 const Tab = createBottomTabNavigator();
 
@@ -107,8 +108,9 @@ const Tabs = () => {
 
 			<Tab.Screen
 				name="Profile"
-				component={Home}
+				component={Login}
 				options={{
+					tabBarStyle: { display: "none" },
 					tabBarIcon: ({ focused }) => (
 						<View
 							style={{

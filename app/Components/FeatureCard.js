@@ -2,9 +2,12 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { orangeStar, redHeart } from "../../assets/icons";
 
-const FeatureCard = ({ item }) => {
+const FeatureCard = ({ gotItem, navigation }) => {
+	const { item } = gotItem;
 	return (
-		<View style={styles.card}>
+		<TouchableOpacity
+			style={styles.card}
+			onPress={() => navigation.navigate("Appointment", { item })}>
 			<View style={styles.iconsView}>
 				<TouchableOpacity>
 					<Image source={redHeart} style={styles.heartImage} />
@@ -40,7 +43,7 @@ const FeatureCard = ({ item }) => {
 					</Text>
 				</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
 	doctorImage: {
 		width: 70,
 		height: 70,
-		borderRadius: 30,
+		borderRadius: 35,
 		backgroundColor: "blue",
 	},
 	doctorName: { fontSize: 14, fontWeight: 600, textAlign: "center" },

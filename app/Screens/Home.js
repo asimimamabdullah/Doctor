@@ -71,7 +71,7 @@ const Home = ({ navigation }) => {
 						scrollEnabled={true}
 						key={(i) => i?.id}
 						keyExtractor={(i) => i?.id}
-						renderItem={(item) => PopularCard(item)}
+						renderItem={(gotItem) => PopularCard({ gotItem, navigation })}
 						showsHorizontalScrollIndicator={false}
 					/>
 				</View>
@@ -92,7 +92,7 @@ const Home = ({ navigation }) => {
 						maxToRenderPerBatch={3}
 						scrollEnabled={true}
 						keyExtractor={(i) => i?.id}
-						renderItem={(item) => FeatureCard(item)}
+						renderItem={(gotItem) => FeatureCard({ gotItem, navigation })}
 						showsHorizontalScrollIndicator={false}
 					/>
 				</View>
