@@ -10,6 +10,7 @@ import home from "./home-48.png";
 import openBook from "./open-book-48.png";
 import user from "./user-48.png";
 import leftArrow from "./left-arrow-32.png";
+import like from "./facebook-like-96.png";
 
 export {
 	close,
@@ -24,4 +25,5 @@ export {
 	openBook,
 	user,
 	leftArrow,
+	like,
 };

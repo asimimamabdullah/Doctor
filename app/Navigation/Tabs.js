@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./../Screens/Home";
 import { home, openBook, user, whiteHeart } from "../../assets/icons";
 import Login from "../Screens/Login";
+import Favorites from "../Screens/Favorites";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +55,7 @@ const Tabs = () => {
 
 			<Tab.Screen
 				name="Favorite"
-				component={Home}
+				component={Favorites}
 				options={{
 					tabBarIcon: ({ focused }) => (
 						<View

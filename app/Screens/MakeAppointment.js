@@ -11,10 +11,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { leftArrow } from "../../assets/icons";
 import AppointmentCard from "../Components/AppointmentCard";
-import { Doctor } from "../Components/doctorclass";
 import { doctors } from "../data/doctors";
 
-const content = () => {
+const content = (navigation) => {
 	const [dates, setDates] = useState([]);
 	const [selectedDate, setSelectedDate] = useState("");
 	const [selectedTime, setSelectedTime] = useState("");
@@ -244,6 +243,7 @@ const content = () => {
 
 			<View style={{ marginTop: 30, flexDirection: "row" }}>
 				<TouchableOpacity
+					onPress={() => navigation.navigate("ConfirmAppointment")}
 					style={{
 						backgroundColor: "rgb(14,190,126)",
 						justifyContent: "center",
@@ -300,7 +300,7 @@ const MakeAppointment = ({ route, navigation }) => {
 					<View style={{ marginVertical: 15, top: 10 }}>
 						<AppointmentCard item={item} />
 					</View>
-					{content()}
+					{content(navigation)}
 
 					{/* <View style={{ marginTop: 15, flexDirection: "row" }}>
 						{dates?.map((val, index) => {

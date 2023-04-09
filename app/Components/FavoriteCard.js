@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { orangeStar, redHeart } from "../../assets/icons";
+import { Dimensions } from "react-native";
 
-const FeatureCard = ({ gotItem, navigation }) => {
+const FavoriteCard = ({ gotItem, navigation }) => {
 	const { item } = gotItem;
-	console.log(gotItem);
 	return (
 		<TouchableOpacity
 			style={styles.card}
@@ -13,10 +13,6 @@ const FeatureCard = ({ gotItem, navigation }) => {
 				<TouchableOpacity hitSlop={5}>
 					<Image source={redHeart} style={styles.heartImage} />
 				</TouchableOpacity>
-				<View style={styles.ratingView}>
-					<Image source={orangeStar} style={styles.ratingIcon} />
-					<Text style={styles.ratingText}>{item?.rating.overall}</Text>
-				</View>
 			</View>
 
 			<View>
@@ -30,52 +26,38 @@ const FeatureCard = ({ gotItem, navigation }) => {
 			<View>
 				<Text style={styles.doctorName}>{item?.name}</Text>
 				<Text style={styles.doctorRate}>
-					<Text
-						style={{
-							color: "rgb(14,190,126)",
-							fontWeight: 600,
-							fontSize: 16,
-						}}>
-						£
-					</Text>{" "}
-					<Text>
-						{item?.rate}
-						/hour
-					</Text>
+					<Text>{item?.area}</Text>
 				</Text>
 			</View>
 		</TouchableOpacity>
 	);
 };
 
-export default FeatureCard;
+export default FavoriteCard;
 
 const styles = StyleSheet.create({
 	card: {
-		width: 130,
-		height: 160,
+		width: "48%",
+		height: 170,
 		backgroundColor: "#ffffff",
-		marginRight: 15,
 		borderRadius: 7,
 		paddingVertical: 15,
 		justifyContent: "center",
 		alignItems: "center",
+		marginVertical: 10,
 		gap: 10,
 	},
 	iconsView: {
 		width: "100%",
 		paddingHorizontal: 10,
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "flex-end",
 	},
-	heartImage: { width: 18, height: 18 },
-	ratingView: { flexDirection: "row", alignItems: "center" },
-	ratingIcon: { width: 16, height: 16 },
-	ratingText: { fontWeight: 600 },
+	heartImage: { width: 22, height: 22 },
 	doctorImage: {
-		width: 70,
-		height: 70,
-		borderRadius: 35,
+		width: 80,
+		height: 80,
+		borderRadius: 40,
 		backgroundColor: "blue",
 	},
 	doctorName: { fontSize: 14, fontWeight: 600, textAlign: "center" },

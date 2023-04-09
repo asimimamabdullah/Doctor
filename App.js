@@ -7,6 +7,7 @@ import Tabs from "./app/Navigation/Tabs";
 import FindDoctor from "./app/Screens/FindDoctor";
 import MakeAppointment from "./app/Screens/MakeAppointment";
 import ConfirmAppointment from "./app/Screens/ConfirmAppointment";
+import Favorites from "./app/Screens/Favorites";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="ConfirmAppointment"
+				initialRouteName="Favorite"
 				screenOptions={{
 					headerShown: true,
 				}}>
@@ -59,6 +60,12 @@ export default function App() {
 				<Stack.Screen
 					name="ConfirmAppointment"
 					component={ConfirmAppointment}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="Favorite"
+					component={Favorites}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
