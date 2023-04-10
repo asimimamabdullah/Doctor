@@ -11,6 +11,10 @@ import openBook from "./open-book-48.png";
 import user from "./user-48.png";
 import leftArrow from "./left-arrow-32.png";
 import like from "./facebook-like-96.png";
+import avatar from "./avatar.png";
+import report from "./profit-report.png";
+import prescription from "./prescription.png";
+import invoice from "./invoice.png";
 
 export {
 	close,
@@ -26,4 +30,8 @@ export {
 	user,
 	leftArrow,
 	like,
+	avatar,
+	report,
+	prescription,
+	invoice,
 };

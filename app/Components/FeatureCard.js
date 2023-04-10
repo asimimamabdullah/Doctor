@@ -4,7 +4,6 @@ import { orangeStar, redHeart } from "../../assets/icons";
 
 const FeatureCard = ({ gotItem, navigation }) => {
 	const { item } = gotItem;
-	console.log(gotItem);
 	return (
 		<TouchableOpacity
 			style={styles.card}

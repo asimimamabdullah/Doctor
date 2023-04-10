@@ -15,6 +15,7 @@ import { close, leftArrow, rightArrow, search } from "../../assets/icons";
 import FeatureCard from "../Components/FeatureCard";
 import { doctors } from "../data/doctors";
 import FavoriteCard from "../Components/FavoriteCard";
+import { StatusBar } from "expo-status-bar";
 
 const Favorites = ({ navigation }) => {
 	const [searchText, setSearchText] = useState("");
@@ -109,6 +110,7 @@ const Favorites = ({ navigation }) => {
 						</View>
 					</ScrollView>
 				</SafeAreaView>
+				<StatusBar style="light" />
 			</LinearGradient>
 		</View>
 	);
