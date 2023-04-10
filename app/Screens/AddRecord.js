@@ -9,6 +9,7 @@ import {
 	prescription,
 	report,
 } from "../../assets/icons";
+import { StatusBar } from "expo-status-bar";
 
 const AddRecord = ({ navigation }) => {
 	const [selectedRecord, setSelectedRecord] = useState("");
@@ -36,6 +37,7 @@ const AddRecord = ({ navigation }) => {
 						</TouchableOpacity>
 						<Text style={{ ...styles.headerText }}>Add Records</Text>
 					</View>
+
 					{/* record upper view  */}
 					<View
 						style={{
@@ -237,6 +239,8 @@ const AddRecord = ({ navigation }) => {
 						</View>
 					</View>
 				</SafeAreaView>
+
+				<StatusBar style="light" />
 			</LinearGradient>
 		</View>
 	);

@@ -15,6 +15,8 @@ import avatar from "./avatar.png";
 import report from "./profit-report.png";
 import prescription from "./prescription.png";
 import invoice from "./invoice.png";
+import edit from "./edit.png";
+import camera from "./photo-camera.png";
 
 export {
 	close,
@@ -34,4 +36,6 @@ export {
 	report,
 	prescription,
 	invoice,
+	edit,
+	camera,
 };

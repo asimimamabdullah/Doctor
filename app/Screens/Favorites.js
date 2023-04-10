@@ -67,6 +67,8 @@ const Favorites = ({ navigation }) => {
 								/>
 							</TouchableOpacity>
 						</View>
+
+						{/* Favorite cards */}
 						<View
 							style={{
 								flexDirection: "row",
@@ -76,6 +78,7 @@ const Favorites = ({ navigation }) => {
 							}}>
 							{doctors?.map((val, index) => (
 								<FavoriteCard
+									key={index}
 									gotItem={{ item: val }}
 									navigation={navigation}
 								/>

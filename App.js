@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./app/Screens/Login";
@@ -9,7 +9,7 @@ import MakeAppointment from "./app/Screens/MakeAppointment";
 import ConfirmAppointment from "./app/Screens/ConfirmAppointment";
 import Favorites from "./app/Screens/Favorites";
 import AddRecord from "./app/Screens/AddRecord";
-
+import Profile from "./app/Screens/Profile";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -73,6 +73,11 @@ export default function App() {
 				<Stack.Screen
 					name="AddRecord"
 					component={AddRecord}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Profile"
+					component={Profile}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>

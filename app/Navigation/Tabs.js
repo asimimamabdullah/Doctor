@@ -1,14 +1,17 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./../Screens/Home";
 import { home, openBook, user, whiteHeart } from "../../assets/icons";
 import Login from "../Screens/Login";
 import Favorites from "../Screens/Favorites";
+import Profile from "../Screens/Profile";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+	const [isLoggedIn, setIsLoggedIn] = useState(true);
+
 	return (
 		<Tab.Navigator
 			initialRouteName="Home"
@@ -109,7 +112,7 @@ const Tabs = () => {
 
 			<Tab.Screen
 				name="Profile"
-				component={Login}
+				component={isLoggedIn ? Profile : Login}
 				options={{
 					tabBarStyle: { display: "none" },
 					tabBarIcon: ({ focused }) => (
