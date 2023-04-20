@@ -10,13 +10,14 @@ import ConfirmAppointment from "./app/Screens/ConfirmAppointment";
 import Favorites from "./app/Screens/Favorites";
 import AddRecord from "./app/Screens/AddRecord";
 import Profile from "./app/Screens/Profile";
+import MapsView from "./app/Screens/MapsView";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="Tabs"
+				initialRouteName="MapsView"
 				screenOptions={{
 					headerShown: true,
 				}}>
@@ -78,6 +79,12 @@ export default function App() {
 				<Stack.Screen
 					name="Profile"
 					component={Profile}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="MapsView"
+					component={MapsView}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
