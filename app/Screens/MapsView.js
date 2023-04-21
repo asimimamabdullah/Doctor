@@ -222,8 +222,7 @@ const MapsView = ({ navigation }) => {
 					style={{ flex: 1 }}>
 					<MapViewDirections
 						origin={fromLocation}
-						d
-						estination={toLocation}
+						destination={toLocation}
 						apikey={process.env.GOOGLE_API_KEY}
 						strokeWidth={5}
 						strokeColor={COLORS.primary}
