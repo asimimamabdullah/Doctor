@@ -17,6 +17,9 @@ import prescription from "./prescription.png";
 import invoice from "./invoice.png";
 import edit from "./edit.png";
 import camera from "./photo-camera.png";
+import pin from "./pin.png";
+import red_pin from "./red-pin.png";
+import car from "./car.png";
 
 export {
 	close,
@@ -37,5 +40,8 @@ export {
 	prescription,
 	invoice,
 	edit,
+	pin,
 	camera,
+	red_pin,
+	car,
 };

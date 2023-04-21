@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Location from "expo-location";
 import Login from "./app/Screens/Login";
 import Register from "./app/Screens/Register";
 import Tabs from "./app/Navigation/Tabs";
@@ -11,9 +12,26 @@ import Favorites from "./app/Screens/Favorites";
 import AddRecord from "./app/Screens/AddRecord";
 import Profile from "./app/Screens/Profile";
 import MapsView from "./app/Screens/MapsView";
+import { useEffect, useState } from "react";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+	const [errorMsg, setErrorMsg] = useState(null);
+
+	useEffect(() => {
+		(async () => {
+			let { status } = await Location.requestForegroundPermissionsAsync();
+			if (status !== "granted") {
+				setErrorMsg("Permission to access location was denied");
+				return;
+			}
+
+			let location = await Location.getCurrentPositionAsync({});
+			console.log("location: ", location);
+			// setLocation(location);
+		})();
+	}, []);
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
