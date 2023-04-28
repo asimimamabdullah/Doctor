@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
-	Button,
 	StyleSheet,
 	Text,
 	View,
@@ -11,10 +10,55 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "../redux/auth/loginAPISlice";
+import { store } from "../app/store";
+import { selectCurrentToken, setCredentials } from "../redux/auth/authSlice";
 
 const Login = ({ navigation }) => {
+	const [user, setUser] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errMsg, setErrMsg] = useState("");
+
+	const token = useSelector(selectCurrentToken);
+	const [login, { loading }] = useLoginMutation();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		setErrMsg("");
+	}, [email, password]);
+
+	useEffect(() => {
+		if (token) navigation.navigate("Tabs");
+	}, []);
+
+	const handleSubmit = async () => {
+		try {
+			const userData = await login({
+				email,
+				password,
+			}).unwrap();
+
+			dispatch(
+				setCredentials({
+					...userData,
+				}),
+			);
+			setPassword("");
+			navigation.navigate("Tabs");
+		} catch (err) {
+			// if (!err?.response) setErrMsg("No Server Response");
+			// else if (err.originalStatus?.status === 400)
+			// 	setErrMsg("Missing Username or password");
+			// else if (err.originalStatus?.status === 401) setErrMsg("Unauthorized");
+			// else setErrMsg("Login Failed");
+			console.log("login erro: ", err);
+			setErrMsg(err?.data?.error);
+			// errRef.current.focus();
+		}
+	};
+
 	return (
 		<View style={{ flex: 1, backgroundColor: "#afe4ec" }}>
 			<LinearGradient
@@ -104,6 +148,7 @@ const Login = ({ navigation }) => {
 										value={password}
 										onChangeText={(t) => setPassword(t)}
 										placeholder="Password"
+										secureTextEntry={true}
 										style={{
 											borderColor: "#dddddd",
 											borderWidth: 1,
@@ -119,6 +164,7 @@ const Login = ({ navigation }) => {
 							</View>
 
 							<TouchableOpacity
+								onPress={handleSubmit}
 								style={{
 									marginHorizontal: 20,
 									borderRadius: 12,
@@ -139,6 +185,7 @@ const Login = ({ navigation }) => {
 
 							{/* Forgot password button Link */}
 							<TouchableOpacity
+								onPress={() => {}}
 								style={{ marginTop: 30, justifyContent: "center" }}>
 								<Text
 									style={{
@@ -157,6 +204,7 @@ const Login = ({ navigation }) => {
 							bottom: 40,
 							justifyContent: "center",
 						}}
+						hitSlop={10}
 						onPress={() => navigation.navigate("Register")}>
 						<Text style={{ textAlign: "center", color: "green" }}>
 							Don't have an account? Join Us

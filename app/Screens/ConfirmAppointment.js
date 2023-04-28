@@ -6,15 +6,57 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { leftArrow, like, rightArrow } from "../../assets/icons";
 import { StatusBar } from "expo-status-bar";
+import { useMakeAppointmentMutation } from "../redux/makeAppointment/appointment";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser } from "../redux/auth/authSlice";
+import axios from "axios";
+import { getAppointments } from "../redux/makeAppointment/appointmentSlice";
 
-const ConfirmAppointment = ({ navigation }) => {
+const ConfirmAppointment = ({ navigation, route }) => {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [callback, setCallback] = useState(false);
+	const dispatch = useDispatch();
+
+	const [makeAppointment, { loading }] = useMakeAppointmentMutation();
+	const user = useSelector(selectCurrentUser);
+
+	const { timeData, doctor } = route.params;
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const data = await axios.get(
+					`http://10.0.2.2:3000/api/appointment/${user._id}`,
+				);
+				dispatch(getAppointments({ data: data.data.appointments }));
+			} catch (error) {
+				console.log("confirm error: ", error);
+			}
+		})();
+	}, []);
+
+	const createAppointment = async () => {
+		try {
+			await makeAppointment({
+				user_id: user._id,
+				user_email: user.email,
+				doctor_id: doctor.id,
+				user_name: user.name,
+				time: timeData.time,
+				date: timeData.date,
+			});
+			toggleVisible();
+			setCallback(!callback);
+		} catch (error) {
+			console.log("confirm errro: ", error);
+		}
+	};
 
 	const toggleVisible = () => {
 		setModalVisible(!modalVisible);
@@ -272,7 +314,7 @@ const ConfirmAppointment = ({ navigation }) => {
 							justifyContent: "flex-end",
 						}}>
 						<TouchableOpacity
-							onPress={toggleVisible}
+							onPress={createAppointment}
 							style={{
 								padding: 15,
 								justifyContent: "center",

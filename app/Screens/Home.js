@@ -26,7 +26,8 @@ const Home = ({ navigation }) => {
 					{/* Find Doctor  */}
 					<View style={styles.findDoctor}>
 						<Text style={styles.findDoctorText}>Find Doctor</Text>
-						<TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("MapsView")}>
 							<Image source={location} style={styles.locationIcon} />
 						</TouchableOpacity>
 					</View>

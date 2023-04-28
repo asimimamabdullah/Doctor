@@ -1,118 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
-import { car, orangeStar, pin, red_pin } from "../../assets/icons";
-import { fillerup } from "../../assets/images";
-
-// const MapsView = () => {
-// 	const [location, setLocation] = useState(undefined);
-// 	const [errorMsg, setErrorMsg] = useState(null);
-//
-// 	useEffect(() => {
-// 		(async () => {
-// 			let { status } = await Location.requestForegroundPermissionsAsync();
-// 			if (status !== "granted") {
-// 				setErrorMsg("Permission to access location was denied");
-// 				return;
-// 			}
-//
-// 			let location = await Location.getCurrentPositionAsync({});
-// 			setLocation(location);
-// 		})();
-// 	}, []);
-//
-// 	console.log(location);
-//
-// 	return (
-// 		<View style={{ flex: 1 }}>
-// 			<MapView
-// 				style={{ width: "100%", height: "100%" }}
-// 				region={{
-// 					latitude: 37.4226711,
-// 					longitude: -122.0849872,
-// 				}}
-// 			/>
-// 			{/* <Text>MapsView</Text> */}
-// 		</View>
-// 	);
-// };
-//
-// export default MapsView;
-//
-// const styles = StyleSheet.create({});
+import { car, pin, red_pin } from "../../assets/icons";
+import { store } from "../app/store";
 
 const MapsView = ({ navigation }) => {
-	const mapView = React.useRef();
+	const mapView = useRef();
 
-	const [restaurant, setRestaurant] = React.useState(null);
-	const [streetName, setStreetName] = React.useState("");
-	const [fromLocation, setFromLocation] = React.useState(null);
-	const [toLocation, setToLocation] = React.useState(null);
-	const [region, setRegion] = React.useState(null);
+	const [streetName, setStreetName] = useState("");
+	const [fromLocation, setFromLocation] = useState(null);
+	const [toLocation, setToLocation] = useState(null);
+	const [region, setRegion] = useState(null);
 
-	const [duration, setDuration] = React.useState(0);
-	const [isReady, setIsReady] = React.useState(false);
-	const [angle, setAngle] = React.useState(0);
-
-	React.useEffect(() => {
-		const affordable = 1;
-		let restaurant = {
-			id: 1,
-			name: "ByProgrammers Burger",
-			rating: 4.8,
-			categories: [5, 7],
-			priceRating: affordable,
-			photo: fillerup,
-			duration: "30 - 45 min",
-			location: {
-				latitude: 37.4236711,
-				longitude: -122.0869872,
-			},
-			courier: {
-				avatar: fillerup,
-				name: "Amy",
-			},
-			menu: [
-				{
-					menuId: 1,
-					name: "Crispy Chicken Burger",
-					photo: fillerup,
-					description: "Burger with crispy chicken, cheese and lettuce",
-					calories: 200,
-					price: 10,
-				},
-				{
-					menuId: 2,
-					name: "Crispy Chicken Burger with Honey Mustard",
-					photo: fillerup,
-					description: "Crispy Chicken Burger with Honey Mustard Coleslaw",
-					calories: 250,
-					price: 15,
-				},
-				{
-					menuId: 3,
-					name: "Crispy Baked French Fries",
-					photo: fillerup,
-					description: "Crispy Baked French Fries",
-					calories: 194,
-					price: 8,
-				},
-			],
-		};
-		const currentLocation = {
-			streetName: "Shaheenabad",
-			gps: {
-				latitude: 37.4226711,
-				longitude: -122.0849872,
-			},
-		};
-
-		let fromLoc = currentLocation.gps;
-		let toLoc = restaurant.location;
-		let street = currentLocation.streetName;
+	useEffect(() => {
+		let fromLoc = store.getState().auth.location;
+		let toLoc = store.getState().auth.location;
+		let street = store.getState().auth.regionName[0].street;
 
 		let mapRegion = {
 			latitude: (fromLoc.latitude + toLoc.latitude) / 2,
@@ -121,23 +25,11 @@ const MapsView = ({ navigation }) => {
 			longitudeDelta: Math.abs(fromLoc.longitude - toLoc.longitude) * 2,
 		};
 
-		setRestaurant(restaurant);
 		setStreetName(street);
 		setFromLocation(fromLoc);
 		setToLocation(toLoc);
 		setRegion(mapRegion);
 	}, []);
-
-	function calculateAngle(coordinates) {
-		let startLat = coordinates[0]["latitude"];
-		let startLng = coordinates[0]["longitude"];
-		let endLat = coordinates[1]["latitude"];
-		let endLng = coordinates[1]["longitude"];
-		let dx = endLat - startLat;
-		let dy = endLng - startLng;
-
-		return (Math.atan2(dy, dx) * 180) / Math.PI;
-	}
 
 	function zoomIn() {
 		let newRegion = {
@@ -220,43 +112,6 @@ const MapsView = ({ navigation }) => {
 					provider={PROVIDER_GOOGLE}
 					initialRegion={region}
 					style={{ flex: 1 }}>
-					<MapViewDirections
-						origin={fromLocation}
-						destination={toLocation}
-						apikey={process.env.GOOGLE_API_KEY}
-						strokeWidth={5}
-						strokeColor={COLORS.primary}
-						optimizeWaypoints={true}
-						onReady={(result) => {
-							setDuration(result.duration);
-
-							if (!isReady) {
-								// Fit route into maps
-								mapView.current.fitToCoordinates(result.coordinates, {
-									edgePadding: {
-										right: SIZES.width / 20,
-										bottom: SIZES.height / 4,
-										left: SIZES.width / 20,
-										top: SIZES.height / 8,
-									},
-								});
-
-								// Reposition the car
-								let nextLoc = {
-									latitude: result.coordinates[0]["latitude"],
-									longitude: result.coordinates[0]["longitude"],
-								};
-
-								if (result.coordinates.length >= 2) {
-									let angle = calculateAngle(result.coordinates);
-									setAngle(angle);
-								}
-
-								setFromLocation(nextLoc);
-								setIsReady(true);
-							}
-						}}
-					/>
 					{destinationMarker()}
 					{carIcon()}
 				</MapView>
@@ -296,7 +151,9 @@ const MapsView = ({ navigation }) => {
 					/>
 
 					<View style={{ flex: 1 }}>
-						<Text style={{ ...FONTS.body3 }}>{streetName}</Text>
+						<Text style={{ ...FONTS.body3 }}>
+							{streetName ? streetName : null}
+						</Text>
 					</View>
 
 					<Text style={{ ...FONTS.body3 }}>
@@ -307,7 +164,7 @@ const MapsView = ({ navigation }) => {
 		);
 	}
 
-	function renderDeliveryInfo() {
+	function renderInfo() {
 		return (
 			<View
 				style={{
@@ -326,50 +183,6 @@ const MapsView = ({ navigation }) => {
 						borderRadius: SIZES.radius,
 						backgroundColor: COLORS.white,
 					}}>
-					<View style={{ flexDirection: "row", alignItems: "center" }}>
-						{/* Avatar */}
-						<Image
-							source={restaurant?.courier.avatar}
-							style={{
-								width: 50,
-								height: 50,
-								borderRadius: 25,
-							}}
-						/>
-
-						<View style={{ flex: 1, marginLeft: SIZES.padding }}>
-							{/* Name & Rating */}
-							<View
-								style={{
-									flexDirection: "row",
-									justifyContent: "space-between",
-								}}>
-								<Text style={{ ...FONTS.h4 }}>
-									{restaurant?.courier.name}
-								</Text>
-								<View style={{ flexDirection: "row" }}>
-									<Image
-										source={orangeStar}
-										style={{
-											width: 18,
-											height: 18,
-											tintColor: COLORS.primary,
-											marginRight: SIZES.padding,
-										}}
-									/>
-									<Text style={{ ...FONTS.body3 }}>
-										{restaurant?.rating}
-									</Text>
-								</View>
-							</View>
-
-							{/* Restaurant */}
-							<Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>
-								{restaurant?.name}
-							</Text>
-						</View>
-					</View>
-
 					{/* Buttons */}
 					<View
 						style={{
@@ -389,7 +202,7 @@ const MapsView = ({ navigation }) => {
 							}}
 							onPress={() => navigation.navigate("Tabs")}>
 							<Text style={{ ...FONTS.h4, color: COLORS.white }}>
-								Call
+								Ok
 							</Text>
 						</TouchableOpacity>
 
@@ -459,7 +272,7 @@ const MapsView = ({ navigation }) => {
 		<View style={{ flex: 1 }}>
 			{renderMap()}
 			{renderDestinationHeader()}
-			{renderDeliveryInfo()}
+			{renderInfo()}
 			{renderButtons()}
 		</View>
 	);

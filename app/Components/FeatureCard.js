@@ -1,16 +1,29 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { orangeStar, redHeart } from "../../assets/icons";
+import { orangeStar, redHeart, whiteHeart } from "../../assets/icons";
+import { store } from "../app/store";
 
-const FeatureCard = ({ gotItem, navigation }) => {
+const FeatureCard = ({ gotItem, navigation, handleLike }) => {
 	const { item } = gotItem;
+
+	const state = store.getState();
+
 	return (
 		<TouchableOpacity
 			style={styles.card}
-			onPress={() => navigation.navigate("Appointment", { item })}>
+			onPress={() => {
+				navigation.navigate("Appointment", { item });
+			}}>
 			<View style={styles.iconsView}>
-				<TouchableOpacity hitSlop={5}>
-					<Image source={redHeart} style={styles.heartImage} />
+				<TouchableOpacity hitSlop={5} onPress={() => handleLike(item.id)}>
+					<Image
+						source={
+							state.favorite.data?.includes(item.id)
+								? redHeart
+								: whiteHeart
+						}
+						style={{ ...styles.heartImage }}
+					/>
 				</TouchableOpacity>
 				<View style={styles.ratingView}>
 					<Image source={orangeStar} style={styles.ratingIcon} />

@@ -8,17 +8,108 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
+// import axios from "axios";
 import { close, leftArrow, rightArrow, search } from "../../assets/icons";
 import FeatureCard from "../Components/FeatureCard";
 import { doctors } from "../data/doctors";
 import FavoriteCard from "../Components/FavoriteCard";
 import { StatusBar } from "expo-status-bar";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useCreateFavoriteMutation } from "../redux/favorite/createFavorite";
+import {
+	handleFavorite,
+	selectCurrentFavorite,
+} from "../redux/favorite/favoriteSlice";
+import { store } from "../app/store";
+import { useDispatch, useSelector } from "react-redux";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Favorites = ({ navigation }) => {
+	const state = store.getState();
 	const [searchText, setSearchText] = useState("");
+	// const [callback, setCallback] = useState(false);
+	const favoriteItems = useSelector(selectCurrentFavorite);
+	const [favorites, setFavorites] = useState(favoriteItems || []);
+
+	useEffect(() => {
+		setFavorites(favoriteItems);
+	}, [favoriteItems]);
+
+	const dispatch = useDispatch();
+	const handleLike = (id) => {
+		dispatch(handleFavorite({ id }));
+	};
+	//
+	// 	useEffect(() => {
+	// 		(async () => {
+	// 			await AsyncStorage.setItem("token", "asdfasdfasdfasdfd");
+	// 		})();
+	// 	}, []);
+
+	// const [favorite, { loading }] = useCreateFavoriteMutation();
+	// const token = useSelector(selectCurrentToken);
+	// const user = useSelector(selectCurrentUser);
+
+	// useEffect(() => {
+	// 	(async () => {
+	// 		if (token) {
+	// 			try {
+	// 				const data = await axios.get(
+	// 					`http://10.0.2.2:3000/api/favorite/${user._id}`,
+	// 				);
+	// 				const d = data.data.favorites;
+	// 				console.log("d; ", d);
+	// 				dispatch(getFavorites(d));
+	// 			} catch (error) {
+	// 				console.log("error tabs: ", error);
+	// 			}
+	// 		}
+	// 	})();
+	// }, [token, callback]);
+
+	// 	const createFavorite = async (item) => {
+	// 		console.log(
+	// 			"state favorite------------------------------------------------------------------------------------------------------: ",
+	// 			state.favorite.data,
+	// 		);
+	// 		if (token) {
+	// 			try {
+	// 				if (state.favorite.data && !state.favorite.data.includes(item)) {
+	// 					await favorite({
+	// 						user_id: user._id,
+	// 						doctor_id: item.id,
+	// 					}).unwrap();
+	// 				} else if (state.favorite.data.includes(item)) {
+	// 					console.log("already in the list what you doin");
+	// 				}
+	//
+	// 				// dispatch(
+	// 				// 	addToFavorite({
+	// 				// 		user_id: user._id,
+	// 				// 		doctor_id: item.id,
+	// 				// 		prev: state.favorite.data,
+	// 				// 	}),
+	// 				// );
+	// 			} catch (error) {
+	// 				console.log("error createfavorites: ", error);
+	// 			}
+	// 		} else if (!token) console.log("login then try");
+	// 	};
+
+	// const deleteFavorite = async (item) => {
+	// 	try {
+	// 		await axios.delete("http://10.0.2.2:3000/api/favorite", {
+	// 			id: item.id,
+	// 		});
+	// 		dispatch(removeFromFavorite({ id: item.id }));
+	// 	} catch (error) {
+	// 		console.log("unable to dlete: ", error);
+	// 	}
+	// };
+
 	return (
 		<View style={{ ...styles.fullFlex }}>
 			<LinearGradient
@@ -76,7 +167,7 @@ const Favorites = ({ navigation }) => {
 								marginVertical: 20,
 								justifyContent: "space-between",
 							}}>
-							{doctors?.map((val, index) => (
+							{favorites?.map((val, index) => (
 								<FavoriteCard
 									key={index}
 									gotItem={{ item: val }}
@@ -106,7 +197,11 @@ const Favorites = ({ navigation }) => {
 								scrollEnabled={true}
 								keyExtractor={(i) => i?.id}
 								renderItem={(gotItem) =>
-									FeatureCard({ gotItem, navigation })
+									FeatureCard({
+										gotItem,
+										navigation,
+										handleLike,
+									})
 								}
 								showsHorizontalScrollIndicator={false}
 							/>

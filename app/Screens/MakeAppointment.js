@@ -12,18 +12,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { leftArrow } from "../../assets/icons";
 import AppointmentCard from "../Components/AppointmentCard";
 import { doctors } from "../data/doctors";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../redux/auth/authSlice";
 
-const content = (navigation) => {
+const content = (navigation, doctor, token) => {
 	const [dates, setDates] = useState([]);
 	const [selectedDate, setSelectedDate] = useState("");
 	const [selectedTime, setSelectedTime] = useState("");
 	const [booked, setBooked] = useState({
 		"Tomorrow, 8 April": ["1:30"],
 	});
+	const [errorMsg, setErrorMsg] = useState("");
 	const [timeSlots, setTimeSlots] = useState({
 		afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
 		evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
 	});
+	const [timeData, setTimeData] = useState({ date: "", time: "" });
 	const months = [
 		"January",
 		"February",
@@ -70,27 +74,13 @@ const content = (navigation) => {
 	}, []);
 
 	const findSlots = (date) => {
-		// if (date in booked) {
-		// 	booked[date].forEach((val) => {
-		// 		const d = Object.keys(doctors[0].doctorsTiming);
-		// 		d.forEach((value) => {
-		// 			const index = doctors[0].doctorsTiming[value].indexOf(val);
-		// 			if (index >= 0) doctors[0].doctorsTiming[value].splice(index, 1);
-		// 		});
-		// 	});
-		// 	console.log(doctors[0].doctorsTiming);
-		// }
+		setTimeData((prev) => ({ ...prev, date: date }));
 		setSelectedDate(date);
 		return (
 			doctors[0]?.doctorsTiming.afternoon.length +
 			doctors[0].doctorsTiming.evening.length
 		);
 	};
-
-	// const doctorsTiming = {
-	// 	afternoon: ["1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00"],
-	// 	evening: ["5:00", "5:30", "6:00", "6:30", "7:00"],
-	// };
 
 	const isBooked = (v = "1:30") => {
 		const d = Object.keys(booked);
@@ -111,12 +101,28 @@ const content = (navigation) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	booked[selectedDate].forEach()
-	// },[selectedDate])
-
+	const interval = () => {
+		setErrorMsg("Please Login");
+		setInterval(() => {
+			setErrorMsg(null);
+		}, 3000);
+	};
 	return (
 		<View style={{ marginVertical: 15 }}>
+			{errorMsg && (
+				<View
+					style={{
+						position: "absolute",
+						top: 30,
+						left: 100,
+						backgroundColor: "red",
+						paddingHorizontal: 20,
+						paddingVertical: 10,
+						zIndex: 3,
+					}}>
+					<Text style={{ fontSize: 16, color: "#fff" }}>{errorMsg}</Text>
+				</View>
+			)}
 			<FlatList
 				data={dates}
 				horizontal
@@ -173,7 +179,10 @@ const content = (navigation) => {
 						isBooked ? (
 							<TouchableOpacity
 								key={index}
-								onPress={() => setSelectedTime(val)}
+								onPress={() => {
+									setTimeData((prev) => ({ ...prev, time: val }));
+									setSelectedTime(val);
+								}}
 								style={{
 									width: 85,
 									paddingHorizontal: 15,
@@ -211,7 +220,10 @@ const content = (navigation) => {
 				<View style={{ flexDirection: "row", gap: 10, flexWrap: "wrap" }}>
 					{timeSlots.evening.map((val, index) => (
 						<TouchableOpacity
-							onPress={() => setSelectedTime(val)}
+							onPress={() => {
+								setTimeData((prev) => ({ ...prev, time: val }));
+								setSelectedTime(val);
+							}}
 							key={index}
 							style={{
 								width: 85,
@@ -243,7 +255,16 @@ const content = (navigation) => {
 
 			<View style={{ marginTop: 30, flexDirection: "row" }}>
 				<TouchableOpacity
-					onPress={() => navigation.navigate("ConfirmAppointment")}
+					onPress={() =>
+						token
+							? timeData.date !== "" || timeData.time !== ""
+								? navigation.navigate("ConfirmAppointment", {
+										timeData,
+										doctor,
+								  })
+								: null
+							: interval()
+					}
 					style={{
 						backgroundColor: "rgb(14,190,126)",
 						justifyContent: "center",
@@ -262,21 +283,7 @@ const content = (navigation) => {
 
 const MakeAppointment = ({ route, navigation }) => {
 	const { item } = route.params;
-	// const doc = new Doctor();
-	// const d = Object.values(doctorsData).forEach((val) =>
-	// 	val.filter((val) => "1:30" !== val),
-	// );
-	// console.log(d);
-
-	// 	useEffect(() => {
-	// 		const d = Object.keys(doc.doctorsData);
-	//
-	// 		d.forEach((val) => {
-	// 			const index = doc.doctorsData[val].indexOf("1:30");
-	// 			if (index >= 0) doc.doctorsData[val].splice(index, 1);
-	// 		});
-	// 		// console.log("here: ", doc.doctorsData);
-	// 	}, []);
+	const token = useSelector(selectCurrentToken);
 
 	return (
 		<View style={{ ...styles.fullFlex }}>
@@ -300,7 +307,7 @@ const MakeAppointment = ({ route, navigation }) => {
 					<View style={{ marginVertical: 15, top: 10 }}>
 						<AppointmentCard item={item} />
 					</View>
-					{content(navigation)}
+					{content(navigation, item, token)}
 
 					{/* <View style={{ marginTop: 15, flexDirection: "row" }}>
 						{dates?.map((val, index) => {

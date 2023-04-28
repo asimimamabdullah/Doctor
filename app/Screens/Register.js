@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
 	Image,
 	StyleSheet,
@@ -10,11 +10,36 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { useRegisterMutation } from "../redux/auth/registerApiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/auth/authSlice";
+import { store } from "../app/store";
 
 const Register = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
+	const [errMsg, setErrMsg] = useState(null);
+
+	const dispatch = useDispatch();
+
+	const [register, { loading }] = useRegisterMutation();
+
+	useEffect(() => {
+		if (store.getState().auth.token !== null) navigation.navigate("Tabs");
+	}, [store.getState().auth.token]);
+
+	const handleRegister = async () => {
+		try {
+			const userData = await register({ email, name, password }).unwrap();
+			dispatch(setCredentials({ ...userData }));
+			navigation.navigate("Tabs");
+		} catch (error) {
+			console.log("error register: ", error);
+			setErrMsg(error?.data?.message);
+		}
+	};
+
 	return (
 		<View style={{ flex: 1, backgroundColor: "#afe4ec" }}>
 			<LinearGradient
@@ -157,6 +182,7 @@ const Register = ({ navigation }) => {
 							</View>
 
 							<TouchableOpacity
+								onPress={handleRegister}
 								style={{
 									marginHorizontal: 20,
 									borderRadius: 12,

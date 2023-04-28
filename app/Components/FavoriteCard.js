@@ -2,13 +2,16 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { orangeStar, redHeart } from "../../assets/icons";
 import { Dimensions } from "react-native";
+import { doctors } from "../data/doctors";
 
 const FavoriteCard = ({ gotItem, navigation }) => {
 	const { item } = gotItem;
+	const getItem = doctors[item];
+
 	return (
 		<TouchableOpacity
 			style={styles.card}
-			onPress={() => navigation.navigate("Appointment", { item })}>
+			onPress={() => navigation.navigate("Appointment", { getItem })}>
 			<View style={styles.iconsView}>
 				<TouchableOpacity hitSlop={5}>
 					<Image source={redHeart} style={styles.heartImage} />
@@ -18,15 +21,15 @@ const FavoriteCard = ({ gotItem, navigation }) => {
 			<View>
 				<Image
 					resizeMode="center"
-					source={item?.image}
+					source={getItem?.image}
 					style={styles.doctorImage}
 				/>
 			</View>
 
 			<View>
-				<Text style={styles.doctorName}>{item?.name}</Text>
+				<Text style={styles.doctorName}>{getItem?.name}</Text>
 				<Text style={styles.doctorRate}>
-					<Text>{item?.area}</Text>
+					<Text>{getItem?.area}</Text>
 				</Text>
 			</View>
 		</TouchableOpacity>

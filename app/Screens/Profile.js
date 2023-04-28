@@ -1,10 +1,18 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { avatar, camera, edit, leftArrow } from "../../assets/icons";
+import { store } from "../app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut, selectCurrentToken } from "../redux/auth/authSlice";
 
 const Profile = ({ navigation }) => {
+	const dispatch = useDispatch();
+	const token = useSelector(selectCurrentToken);
+	useEffect(() => {
+		if (!token) navigation.navigate("Login");
+	}, [token]);
 	return (
 		<View style={{ ...styles.fullFlex }}>
 			<LinearGradient
@@ -227,6 +235,10 @@ const Profile = ({ navigation }) => {
 
 					<View style={{ marginTop: 10 }}>
 						<TouchableOpacity
+							onPress={() => {
+								dispatch(logOut());
+								navigation.navigate("Login");
+							}}
 							style={{
 								padding: 15,
 								backgroundColor: "rgb(14,190,126)",

@@ -1,16 +1,46 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./../Screens/Home";
 import { home, openBook, user, whiteHeart } from "../../assets/icons";
-import Login from "../Screens/Login";
+import * as Location from "expo-location";
 import Favorites from "../Screens/Favorites";
 import Profile from "../Screens/Profile";
+import { store } from "../app/store";
+import { setLocationGlobal } from "../redux/auth/authSlice";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [errorMsg, setErrorMsg] = useState(null);
+	const [location, setLocation] = useState(null);
+
+	useEffect(() => {
+		(async () => {
+			let { status } = await Location.requestForegroundPermissionsAsync();
+			if (status !== "granted") {
+				setErrorMsg("Permission to access location was denied");
+				return;
+			}
+
+			let location = await Location.getCurrentPositionAsync({});
+			let regionName = await Location.reverseGeocodeAsync({
+				latitude: location.coords.latitude,
+				longitude: location.coords.longitude,
+			});
+
+			if (location && regionName) {
+				store.dispatch(
+					setLocationGlobal({
+						location: location.coords,
+						regionName: regionName,
+					}),
+				);
+			}
+
+			setLocation({ location: location.coords, regionName });
+		})();
+	}, []);
 
 	return (
 		<Tab.Navigator
@@ -111,8 +141,8 @@ const Tabs = () => {
 			/>
 
 			<Tab.Screen
-				name="Profile"
-				component={isLoggedIn ? Profile : Login}
+				name={"Profile"}
+				component={Profile}
 				options={{
 					tabBarStyle: { display: "none" },
 					tabBarIcon: ({ focused }) => (
