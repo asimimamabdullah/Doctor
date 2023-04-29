@@ -14,11 +14,13 @@ import { close, search, location, rightArrow } from "../../assets/icons";
 import PopularCard from "../Components/PopularCard";
 import { doctors } from "./../data/doctors";
 import FeatureCard from "../Components/FeatureCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleFavorite } from "../redux/favorite/favoriteSlice";
+import { selectCurrentUser } from "../redux/auth/authSlice";
 
 const Home = ({ navigation }) => {
 	const [searchText, setSearchText] = useState("");
+	const user = useSelector(selectCurrentUser);
 
 	const dispatch = useDispatch();
 
@@ -29,7 +31,9 @@ const Home = ({ navigation }) => {
 		<View style={{ flex: 1 }}>
 			<View style={styles.topDiv}>
 				<View style={styles.topDivContainer}>
-					<Text style={styles.greetText}>Hi {"User"}</Text>
+					<Text style={styles.greetText}>
+						Hi {user?.name ? user?.name : "User"}
+					</Text>
 					{/* Find Doctor  */}
 					<View style={styles.findDoctor}>
 						<Text style={styles.findDoctorText}>Find Doctor</Text>
