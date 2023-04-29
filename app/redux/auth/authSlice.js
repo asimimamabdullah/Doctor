@@ -13,7 +13,6 @@ const authSlice = createSlice({
 		logOut: (state, action) => {
 			state.user = null;
 			state.token = null;
-			console.log("came here logged out");
 		},
 		setLocationGlobal: (state, action) => {
 			state.location = action.payload.location;

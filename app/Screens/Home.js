@@ -14,10 +14,17 @@ import { close, search, location, rightArrow } from "../../assets/icons";
 import PopularCard from "../Components/PopularCard";
 import { doctors } from "./../data/doctors";
 import FeatureCard from "../Components/FeatureCard";
+import { useDispatch } from "react-redux";
+import { handleFavorite } from "../redux/favorite/favoriteSlice";
 
 const Home = ({ navigation }) => {
 	const [searchText, setSearchText] = useState("");
 
+	const dispatch = useDispatch();
+
+	const handleLike = (id) => {
+		dispatch(handleFavorite({ id }));
+	};
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={styles.topDiv}>
@@ -93,7 +100,9 @@ const Home = ({ navigation }) => {
 						maxToRenderPerBatch={3}
 						scrollEnabled={true}
 						keyExtractor={(i) => i?.id}
-						renderItem={(gotItem) => FeatureCard({ gotItem, navigation })}
+						renderItem={(gotItem) =>
+							FeatureCard({ gotItem, navigation, handleLike })
+						}
 						showsHorizontalScrollIndicator={false}
 					/>
 				</View>

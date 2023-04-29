@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import { car, pin, red_pin } from "../../assets/icons";
@@ -93,8 +93,7 @@ const MapsView = ({ navigation }) => {
 			<Marker
 				coordinate={fromLocation}
 				anchor={{ x: 0.5, y: 0.5 }}
-				flat={true}
-				rotation={angle}>
+				flat={true}>
 				<Image
 					source={car}
 					style={{
@@ -156,9 +155,7 @@ const MapsView = ({ navigation }) => {
 						</Text>
 					</View>
 
-					<Text style={{ ...FONTS.body3 }}>
-						{Math.ceil(duration)} mins
-					</Text>
+					<Text style={{ ...FONTS.body3 }}>20 mins</Text>
 				</View>
 			</View>
 		);
