@@ -77,8 +77,8 @@ const content = (navigation, doctor, token) => {
 		setTimeData((prev) => ({ ...prev, date: date }));
 		setSelectedDate(date);
 		return (
-			doctors[0]?.doctorsTiming.afternoon.length +
-			doctors[0].doctorsTiming.evening.length
+			doctors[0]?.doctorsTiming?.afternoon?.length +
+			doctors[0]?.doctorsTiming?.evening?.length
 		);
 	};
 
@@ -175,7 +175,7 @@ const content = (navigation, doctor, token) => {
 					Afternoon 7 slots
 				</Text>
 				<View style={{ flexDirection: "row", gap: 10, flexWrap: "wrap" }}>
-					{timeSlots.afternoon.map((val, index) =>
+					{timeSlots?.afternoon?.map((val, index) =>
 						isBooked ? (
 							<TouchableOpacity
 								key={index}
@@ -218,7 +218,7 @@ const content = (navigation, doctor, token) => {
 					Evening 5 slots
 				</Text>
 				<View style={{ flexDirection: "row", gap: 10, flexWrap: "wrap" }}>
-					{timeSlots.evening.map((val, index) => (
+					{timeSlots?.evening?.map((val, index) => (
 						<TouchableOpacity
 							onPress={() => {
 								setTimeData((prev) => ({ ...prev, time: val }));

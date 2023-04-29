@@ -11,26 +11,21 @@ import {
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import axios from "axios";
 import { close, leftArrow, rightArrow, search } from "../../assets/icons";
 import FeatureCard from "../Components/FeatureCard";
 import { doctors } from "../data/doctors";
 import FavoriteCard from "../Components/FavoriteCard";
 import { StatusBar } from "expo-status-bar";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useCreateFavoriteMutation } from "../redux/favorite/createFavorite";
 import {
 	handleFavorite,
 	selectCurrentFavorite,
 } from "../redux/favorite/favoriteSlice";
 import { store } from "../app/store";
 import { useDispatch, useSelector } from "react-redux";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Favorites = ({ navigation }) => {
 	const state = store.getState();
 	const [searchText, setSearchText] = useState("");
-	// const [callback, setCallback] = useState(false);
 	const favoriteItems = useSelector(selectCurrentFavorite);
 	const [favorites, setFavorites] = useState(favoriteItems || []);
 
