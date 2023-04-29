@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.Doctor"
+      "package": "com.anonymous.Doctor",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b68344f5-0eb0-42f7-a1a0-8e7805a97643"
+      }
     }
   }
 }

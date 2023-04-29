@@ -40,6 +40,7 @@ const Login = ({ navigation }) => {
 				password,
 			}).unwrap();
 
+			console.log("userdata: ", userData);
 			dispatch(
 				setCredentials({
 					...userData,

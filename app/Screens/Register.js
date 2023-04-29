@@ -149,8 +149,6 @@ const Register = ({ navigation }) => {
 											borderRadius: 12,
 											color: "#777",
 										}}
-
-										//Image here of if email is valid or not
 									/>
 								</View>
 								{/* Password Field */}
@@ -159,6 +157,7 @@ const Register = ({ navigation }) => {
 										value={password}
 										onChangeText={(t) => setPassword(t)}
 										placeholder="Password"
+										secureTextEntry={true}
 										style={{
 											borderColor: "#ddd",
 											borderWidth: 1,
