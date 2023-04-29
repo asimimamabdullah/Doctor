@@ -32,7 +32,7 @@ const ConfirmAppointment = ({ navigation, route }) => {
 		(async () => {
 			try {
 				const data = await axios.get(
-					`http://10.0.2.2:3000/api/appointment/${user._id}`,
+					`https://doctor-backend-production.up.railway.app/api/appointment/${user._id}`,
 				);
 				dispatch(getAppointments({ data: data.data.appointments }));
 			} catch (error) {

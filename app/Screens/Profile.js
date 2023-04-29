@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { avatar, camera, edit, leftArrow } from "../../assets/icons";
-import { store } from "../app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, selectCurrentToken } from "../redux/auth/authSlice";
+import {
+	logOut,
+	selectCurrentToken,
+	selectCurrentUser,
+} from "../redux/auth/authSlice";
 
 const Profile = ({ navigation }) => {
 	const dispatch = useDispatch();
@@ -13,6 +16,8 @@ const Profile = ({ navigation }) => {
 	useEffect(() => {
 		if (!token) navigation.navigate("Login");
 	}, [token]);
+
+	const user = useSelector(selectCurrentUser);
 	return (
 		<View style={{ ...styles.fullFlex }}>
 			<LinearGradient
@@ -134,7 +139,7 @@ const Profile = ({ navigation }) => {
 								Name
 							</Text>
 							<Text style={{ color: "#aaaaaa", fontSize: 16 }}>
-								Vishali Sood
+								{user?.name}
 							</Text>
 						</View>
 						<TouchableOpacity hitSlop={5}>
@@ -164,7 +169,7 @@ const Profile = ({ navigation }) => {
 								Contact Number
 							</Text>
 							<Text style={{ color: "#aaaaaa", fontSize: 16 }}>
-								+923137816717
+								{user?.phone}
 							</Text>
 						</View>
 						<TouchableOpacity hitSlop={5}>
@@ -194,7 +199,7 @@ const Profile = ({ navigation }) => {
 								Date of birth
 							</Text>
 							<Text style={{ color: "#aaaaaa", fontSize: 16 }}>
-								04 05 1998
+								{user?.dateOfBirth}
 							</Text>
 						</View>
 						<TouchableOpacity hitSlop={5}>
